@@ -29,7 +29,6 @@ BuildRequires:  %{python_module setuptools >= 61.0}
 # SECTION test requirements
 BuildRequires:  %{python_module click >= 7.0}
 BuildRequires:  %{python_module requests >= 2.17.3}
-BuildRequires:  python-setuptools
 # /SECTION
 BuildRequires:  fdupes
 Requires:       python-click >= 7.0
