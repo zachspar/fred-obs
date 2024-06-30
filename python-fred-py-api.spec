@@ -14,8 +14,6 @@
 
 # Please submit bugfixes or comments via https://bugs.opensuse.org/
 #
-
-
 Name:           python-fred-py-api
 Version:        1.2.0
 Release:        0
@@ -26,6 +24,7 @@ Source:         https://files.pythonhosted.org/packages/source/f/fred-py-api/fre
 BuildRequires:  python-rpm-macros
 BuildRequires:  %{python_module pip}
 BuildRequires:  %{python_module setuptools >= 61.0}
+BuildRequires:  %{python_module wheel}
 # SECTION test requirements
 BuildRequires:  %{python_module click >= 7.0}
 BuildRequires:  %{python_module requests >= 2.17.3}
@@ -33,6 +32,7 @@ BuildRequires:  %{python_module requests >= 2.17.3}
 BuildRequires:  fdupes
 Requires:       python-click >= 7.0
 Requires:       python-requests >= 2.17.3
+Requires:       python-setuptools
 Suggests:       python-black == 22.6.0
 Suggests:       python-coverage == 6.4.2
 Suggests:       python-black == 22.6.0
@@ -46,7 +46,7 @@ BuildArch:      noarch
 A fully featured FRED Command Line Interface & Python API client library.
 
 %prep
-%autosetup -p1 -n fred-py-api-%{version}
+%autosetup -p1 -n fred_py_api-%{version}
 
 %build
 %pyproject_wheel
@@ -59,34 +59,19 @@ A fully featured FRED Command Line Interface & Python API client library.
 %python_clone -a %{buildroot}%{_bindir}/series
 %python_clone -a %{buildroot}%{_bindir}/sources
 %python_clone -a %{buildroot}%{_bindir}/tags
-%python_clone -a %{buildroot}%{_bindir}/fred
-%python_clone -a %{buildroot}%{_bindir}/categories
-%python_clone -a %{buildroot}%{_bindir}/releases
-%python_clone -a %{buildroot}%{_bindir}/series
-%python_clone -a %{buildroot}%{_bindir}/sources
-%python_clone -a %{buildroot}%{_bindir}/tags
 %python_expand %fdupes %{buildroot}%{$python_sitelib}
 
 %post
-%python_install_alternative fred categories releases series sources tags fred categories releases series sources tags
-
-%postun
-%python_uninstall_alternative fred
+%python_install_alternative fred categories releases series sources tags
 
 %files %{python_files}
+%{python_sitelib}/fred*
+%{python_sitelib}/fred*.dist-info
 %python_alternative %{_bindir}/fred
 %python_alternative %{_bindir}/categories
 %python_alternative %{_bindir}/releases
 %python_alternative %{_bindir}/series
 %python_alternative %{_bindir}/sources
 %python_alternative %{_bindir}/tags
-%python_alternative %{_bindir}/fred
-%python_alternative %{_bindir}/categories
-%python_alternative %{_bindir}/releases
-%python_alternative %{_bindir}/series
-%python_alternative %{_bindir}/sources
-%python_alternative %{_bindir}/tags
-%{python_sitelib}/fred-py-api
-%{python_sitelib}/fred-py-api-%{version}.dist-info
 
 %changelog
